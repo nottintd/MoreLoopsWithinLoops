@@ -120,11 +120,11 @@ def triangle_upside_down(r):
     """
     for j in range(r):
         count = 1
-        for k in range(r + 1):
-            if k > j:
+        for k in range(r):
+            if k >= j:
                 print(count, end='')
                 count = count + 1
-            if k <= j:
+            else:
                 print(' ', end='')
         print()
     # ------------------------------------------------------------------

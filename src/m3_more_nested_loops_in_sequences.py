@@ -3,8 +3,8 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of SEQUENCES OF SUB-SEQUENCES.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Tyler Nottingham.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 
 def main():
@@ -17,7 +17,7 @@ def main():
 def run_test_largest_number():
     """ Tests the    largest_number    function. """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement this TEST function.
+    # DONE: 2. Implement this TEST function.
     #   It TESTS the  largest_number  function defined below.
     #   Include at least ** 1 ** ADDITIONAL test beyond those we wrote.
     # ------------------------------------------------------------------
@@ -44,7 +44,14 @@ def run_test_largest_number():
     print('Expected and actual are:', expected, answer)
 
     # TO DO 2 (continued): Add your ADDITIONAL test(s) here:
-
+    # Test 4:
+    expected = 123012
+    answer = largest_number([(34323, 1425, 45454),
+                             (1443, 1044, 1144, 744, 1054),
+                             [1, 2, 3, 4],
+                             [],
+                             [100000, 1209, 123012, 21431]])
+    print('Expected and actual are:', expected, answer)
 
 def largest_number(seq_seq):
     """
@@ -71,8 +78,24 @@ def largest_number(seq_seq):
     and the given argument is a sequence of sequences,
     where each subsequence contains only numbers.
     """
+    largest_list = []
+    for j in range(len(seq_seq)):
+        if len(seq_seq[j]) > 0:
+            largest = seq_seq[j][0]
+            for k in range(len(seq_seq[j])):
+                if seq_seq[j][k] > largest:
+                    largest = seq_seq[j][k]
+            largest_list = largest_list + [largest]
+    if len(largest_list) > 0:
+        big = largest_list[0]
+        for k in range(len(largest_list)):
+            if largest_list[k] > big:
+                big = largest_list[k]
+        return big
+    return None
+
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # ------------------------------------------------------------------
 
@@ -80,7 +103,7 @@ def largest_number(seq_seq):
 def run_test_largest_negative_number():
     """ Tests the    largest_negative_number    function. """
     # ------------------------------------------------------------------
-    # TODO: 4. Implement this TEST function.
+    # DONE: 4. Implement this TEST function.
     #   It TESTS the  largest_negative_number  function defined below.
     #
     #   Include enough tests to give you confidence that your solution
@@ -90,7 +113,30 @@ def run_test_largest_negative_number():
     print('-------------------------------------------------')
     print('Testing the   LARGEST_NEGATIVE_NUMBER   function:')
     print('-------------------------------------------------')
+    # Test 1:
+    expected = -2
+    answer = largest_negative_number([(-3, 1, -4),
+                                      (13, -10, 11, -7, 10),
+                                      [1, -2, 3, -4]])
+    print('Expected and actual are:', expected, answer)
 
+    # Test 2:
+    expected = None
+    answer = largest_negative_number([(3, 1, 4),
+                                      (13, 10, 11, 7, 10),
+                                      [1, 2, 3, 4]])
+    print('Expected and actual are:', expected, answer)
+
+    # Test 3:
+    expected = None
+    answer = largest_negative_number([[], [], []])
+    print('Expected and actual are:', expected, answer)
+
+    # Test 4:
+    expected = -234
+    answer = largest_negative_number([[], [-234, 3443, -100000, 343, -342],
+                                     []])
+    print('Expected and actual are:', expected, answer)
 
 def largest_negative_number(seq_seq):
     """
@@ -114,8 +160,23 @@ def largest_negative_number(seq_seq):
     and the given argument is a sequence of sequences,
     where each subsequence contains only numbers.
     """
+    list_of_negatives = []
+    for j in range(len(seq_seq)):
+        if len(seq_seq[j]) > 0:
+            for k in range(len(seq_seq[j])):
+                if seq_seq[j][k] < 0:
+                    list_of_negatives = list_of_negatives + [seq_seq[j][k]]
+    if len(list_of_negatives) > 0:
+        largest_negative = list_of_negatives[0]
+        for k in range(1, len(list_of_negatives)):
+            if list_of_negatives[k] > largest_negative:
+                largest_negative = list_of_negatives[k]
+        return largest_negative
+    return None
+
+
     # ------------------------------------------------------------------
-    # TODO: 5. Implement and test this function.
+    # DONE: 5. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     #
     # CHALLENGE: Try to solve this problem with no additional sequences
@@ -354,6 +415,29 @@ def first_is_elsewhere_too(seq_seq):
       :type seq_seq: (list, tuple)
     and the given argument is a sequence of sequences.
     """
+    # for j in range(len(seq_seq)):
+    #     if len(seq_seq[j]) > 0:
+    #         the_element = seq_seq[0][0]
+    #         for k in range(len(seq_seq[j])):
+    #             if seq_seq[j] == seq_seq[0]:
+    #                 for i in range(1, len(seq_seq[j])):
+    #                     if seq_seq[j][i] == the_element:
+    #                         return True
+    #             if seq_seq[j][k] == the_element:
+    #                 return True
+    # return False
+    count = 0
+    for j in range(len(seq_seq)):
+        if len(seq_seq[0]) > 0:
+            the_element = seq_seq[0][0]
+            for k in range(len(seq_seq[j])):
+                if seq_seq[j][k] == the_element:
+                    count = count + 1
+                if count == 2:
+                    return True
+        else:
+            return False
+    return False
     # ------------------------------------------------------------------
     # TODO: 6. Implement and test this function.
     #          Some tests are already written for you (above).
